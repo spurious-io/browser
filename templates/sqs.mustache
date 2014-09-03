@@ -1,0 +1,27 @@
+<div class="panel panel-default">
+  <ol class="breadcrumb pull-left" style="margin-top:8px;margin-bottom:0px;">
+    <li>SQS</li>
+  </ol>
+  <div class="panel-heading clearfix">
+    <a class="btn btn-primary pull-right" href="/sqs/create">Create</a>
+  </div>
+
+  <table class="table">
+    <thead>
+      <th>Name</th>
+      <th>Url</th>
+      <th>Available</th>
+      <th>Visible</th>
+    </thead>
+    <tbody>
+      {{# queues}}
+        <tr>
+          <td><a href="/sqs/{{ name }}" title="{{ queue.arn}}">{{ name }}</a></td>
+          <td>{{ queue.url }}</td>
+          <td>{{ queue.approximate_number_of_messages }}</td>
+          <td>{{ queue.approximate_number_of_messages_not_visible }}</td>
+        </tr>
+      {{/ queues}}
+    </tbody>
+  </table>
+</div>

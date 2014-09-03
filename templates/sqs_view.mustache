@@ -1,0 +1,18 @@
+<div class="panel panel-default">
+  <ol class="breadcrumb pull-left" style="margin-top:8px;margin-bottom:0px;">
+    <li><a href="/sqs">SQS</a></li>
+    <li>{{ content }}</li>
+  </ol>
+
+  <div class="panel-heading clearfix">
+    <a class="btn btn-danger pull-right" href="/sqs/{{ content }}/delete">Delete</a>
+  </div>
+  <div class="panel-body">
+  <form role="form" action="/sqs/{{ content }}" method="post">
+    <div class="form-group">
+      <label for="sqsMessage">Message body</label>
+      <textarea class="form-control" id="sqsMessage" name="sqsMessage" placeholder="Message" rows="10" required></textarea>
+    </div>
+    <button type="submit" class="btn btn-default">Submit</button>
+  </form>    
+</div>

@@ -23,4 +23,5 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "spurious"
   spec.add_development_dependency "spurious-ruby-awssdk-helper"
   spec.add_development_dependency "sinatra"
+  spec.add_development_dependency "mustache"
 end
