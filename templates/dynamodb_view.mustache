@@ -1,0 +1,54 @@
+<div class="panel panel-default">
+  <ol class="breadcrumb pull-left" style="margin-top:8px;margin-bottom:0px;">
+    <li><a href="/dynamodb">DynamoDB</a></li>
+    <li>{{ table_name }}</li>
+  </ol>
+  <div class="panel-heading clearfix"></div>
+
+  {{#has_records}}
+
+    <div class="panel-body">
+      <nav>
+        <ul class="pager">
+          {{^items.first}}
+            <li class="previous">
+              <a href="/dynamodb/{{ table_name }}/view{{ pagination.previous }}">Previous</a>
+            </li>
+          {{/items.first}}
+          {{^items.last}}
+            <li class="next">
+              <a href="/dynamodb/{{ table_name }}/view{{ pagination.next }}">Next</a>
+            </li>
+          {{/items.last}}
+        </ul>
+      </nav>
+      <div class="table-responsive">
+        <table class="table">
+          <thead>
+            {{#items.headers}}
+              <th>{{ . }}</th>
+            {{/items.headers}}
+          </thead>
+          <tbody>
+          {{#items.data}}
+            <tr>
+              {{#.}}
+                {{{ . }}}
+              {{/.}}
+            </tr>
+          {{/items.data}}
+          </tbody>
+        </table>
+       </div>
+
+ 
+
+    </div>
+
+  {{/has_records}}
+  {{^has_records}}
+    <div class="panel-body">
+      <p>No records available</p>
+    </div>
+  {{/has_records}}
+</div>

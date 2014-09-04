@@ -6,12 +6,27 @@
     <a class="btn btn-primary pull-right" href="/s3/create">Create</a>
   </div>
 
-  <ul>
-    {{# buckets}}
-      <li><a href="/s3/{{ name }}">{{ name }}</a></li>
-    {{/buckets}}
-  </ul>
+  <table class="table">
+    <thead>
+      <th>Name</th>
+      <th width="70%">Url</th>
+      <!-- <th colspan="2" width="7%"></th> -->
+    </thead>
+    <tbody>
+      {{# buckets}}
+	  	<tr>
+			<td><a href="/s3/{{ name }}">{{ name }}</a></td>
+			<td>{{ url }}</td>
+			<!-- <td> -->
+			<!-- 	<a href="/s3/{{ name }}/clear" title="Clear messages"><span class="glyphicon glyphicon-trash"></span></a> -->
+			<!-- </td> -->
+			<!-- <td> -->
+			<!-- 	<a href="/s3/{{ name }}/delete" title="Delete"><span class="glyphicon glyphicon-remove-circle"></span></a> -->
+			<!-- </td> -->
+		</tr>
+      {{/buckets}}
+    </tbody>
+  </table>
 
 </div>
-
 

@@ -58,9 +58,6 @@ class App < Sinatra::Base
     redirect to('/sqs')
   end
 
-
-
-
   get '/s3' do
     mustache :s3
   end
@@ -74,8 +71,77 @@ class App < Sinatra::Base
     redirect to('/s3')
   end
 
+  get '/s3/:bucket_name/clear' do
+    AWS::S3.new.buckets[params['bucket_name']].clear!
+    redirect to('/s3')
+  end
+
+  get '/s3/:bucket_name/delete' do
+    AWS::S3.new.buckets[params['bucket_name']].delete!
+  end
+
+  get '/s3/view/*' do
+    params['object_path'] = params[:captures][0]
+    mustache :s3_object_view
+  end
+
+  get '/s3/preview/*' do
+    params['object_path'] = params[:captures][0]
+    path_parts  = params['object_path'].split('/')
+    object = AWS::S3.new.buckets[path_parts.shift].objects[path_parts.join('/')]
+    content_type object.content_type.empty? ? 'text/plain' : object.content_type
+    object.read
+  end
+
+  get '/s3/add/*' do
+    params['object_path'] = params[:captures][0]
+    mustache :s3_object_add
+  end
+
+  post '/s3/add/*' do
+    params['object_path'] = params[:captures][0]
+    bucket = AWS::S3.new.buckets[params['bucket_name']]
+  end
+
+  get '/s3/*' do
+    params['object_path'] = params[:captures][0]
+    mustache :s3_object
+  end
+
   get '/dynamodb' do
     mustache :dynamodb
+  end
+
+  get '/dynamodb/create' do
+    mustache :dynamodb_create
+  end
+
+  post '/dynamodb/create' do
+    begin
+      table_data = JSON::parse(params['tableData'], { :symbolize_names => true })
+      client = AWS::DynamoDB::Client::V20120810.new
+
+      if table_data[:table_name].nil?
+        table_data[:table_name] = params['tableName']
+      end
+
+      client.create_table(table_data)
+
+    rescue Exception => e
+      redirect to("/dynamodb?error=#{e.message}")
+    end
+
+    redirect to('/dynamodb')
+  end
+
+  get '/dynamodb/:table_name/delete' do
+    client = AWS::DynamoDB::Client::V20120810.new
+    client.delete_table({:table_name => params['table_name'] })
+    redirect to('/dynamodb')
+  end
+
+  get '/dynamodb/:table_name/view' do
+    mustache :dynamodb_view
   end
 
   # get '/login/form' do

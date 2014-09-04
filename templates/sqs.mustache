@@ -12,6 +12,7 @@
       <th>Url</th>
       <th>Available</th>
       <th>Visible</th>
+      <th colspan="2"></th>
     </thead>
     <tbody>
       {{# queues}}
@@ -20,6 +21,12 @@
           <td>{{ queue.url }}</td>
           <td>{{ queue.approximate_number_of_messages }}</td>
           <td>{{ queue.approximate_number_of_messages_not_visible }}</td>
+          <td>
+            <a href="/sqs/{{ name }}/clear" title="Clear messages"><span class="glyphicon glyphicon-trash"></span></a>
+          </td>
+          <td>
+            <a href="/sqs/{{ name }}/delete" title="Delete"><span class="glyphicon glyphicon-remove-circle"></span></a>
+          </td>
         </tr>
       {{/ queues}}
     </tbody>

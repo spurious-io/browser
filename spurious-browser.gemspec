@@ -22,6 +22,7 @@ Gem::Specification.new do |spec|
   spec.add_runtime_dependency "spurious-ruby-awssdk-helper"
   spec.add_runtime_dependency "sinatra"
   spec.add_runtime_dependency "mustache"
+  spec.add_runtime_dependency "nokogiri"
 
   spec.add_development_dependency "bundler", "~> 1.5"
   spec.add_development_dependency "rake"

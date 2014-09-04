@@ -1,0 +1,52 @@
+<div class="panel panel-default">
+  <ol class="breadcrumb pull-left" style="margin-top:8px;margin-bottom:0px;">
+    <li><a href="/s3">S3</a></li>
+    {{# navigation}}
+      <li>
+        {{#last}}
+          {{ nav_name }}
+        {{/last}}
+        {{^last}}
+          <a href="{{ nav_path }}">{{ nav_name }}</a>
+        {{/last}}
+      </li>
+    {{/navigation}}
+  </ol>
+  <div class="panel-heading clearfix">
+  </div>
+
+  <table class="table">
+    <thead>
+      <th width="3%"></th>
+      <th>Name</th>
+      <th>Content type</th>
+      <th>Size</th>
+      <!-- <th colspan="2" width="7%"></th> -->
+    </thead>
+    <tbody>
+      {{# objects}}
+	  	<tr>
+			<td>
+			  {{#is_dir}}
+				<span class="glyphicon glyphicon-folder-close"></span>
+			  {{/is_dir}}
+			  {{^is_dir}}
+				<span class="glyphicon glyphicon-file"></span>
+			  {{/is_dir}}
+			</td>
+			<td><a href="/s3/{{ object_path }}">{{ object_name }}</a></td>
+			<td>{{ content_type }}</td>
+			<td>{{ content_length }}</td>
+			<!-- <td> -->
+			<!--   <a href="/s3/{{ object_path }}/clear" title="Clear messages"><span class="glyphicon glyphicon-trash"></span></a> -->
+			<!-- </td> -->
+			<!-- <td> -->
+			<!--   <a href="/s3/{{ object_path }}/delete" title="Delete"><span class="glyphicon glyphicon-remove-circle"></span></a> -->
+			<!-- </td> -->
+		</tr>
+      {{/objects}}
+    </tbody>
+  </table>
+
+</div>
+
