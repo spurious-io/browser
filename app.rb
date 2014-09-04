@@ -48,8 +48,30 @@ class App < Sinatra::Base
     redirect to('/sqs')
   end
 
+  get '/sqs/:name/clear' do
+    queue = AWS::SQS.new.queues.named(params['name'])
+    while queue.approximate_number_of_messages > 0
+      queue.receive_message(limit: 10) do |msg|
+        queue.batch_delete(msg)
+      end
+    end
+    redirect to('/sqs')
+  end
+
+
+
+
   get '/s3' do
     mustache :s3
+  end
+
+  get '/s3/create' do
+    mustache :s3_create
+  end
+
+  post '/s3/create' do
+    AWS::S3.new.buckets.create(params['bucketName'])
+    redirect to('/s3')
   end
 
   get '/dynamodb' do

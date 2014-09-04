@@ -9,13 +9,6 @@ class App
       end
 
       def queues
-        AWS.config({
-          :access_key_id     => 'development_access',
-          :secret_access_key => 'development_secret',
-          :region            => 'eu-westi-1'
-        })
-
-        Spurious::Ruby::Awssdk::Helper.configure
         AWS::SQS.new.queues.to_a.map do |queue|
           OpenStruct.new({
             :queue => queue,

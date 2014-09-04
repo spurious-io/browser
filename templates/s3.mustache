@@ -1,1 +1,17 @@
-<h2>{{ content }}</h2>
+<div class="panel panel-default">
+  <ol class="breadcrumb pull-left" style="margin-top:8px;margin-bottom:0px;">
+    <li>S3</li>
+  </ol>
+  <div class="panel-heading clearfix">
+    <a class="btn btn-primary pull-right" href="/s3/create">Create</a>
+  </div>
+
+  <ul>
+    {{# buckets}}
+      <li><a href="/s3/{{ name }}">{{ name }}</a></li>
+    {{/buckets}}
+  </ul>
+
+</div>
+
+
