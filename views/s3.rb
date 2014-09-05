@@ -8,12 +8,18 @@ class App
       end
 
       def buckets
-        url = URI.parse("http://#{AWS.config.s3_endpoint}:#{AWS.config.s3_port}")
-        req = Net::HTTP::Get.new(url.to_s)
-        doc  = Nokogiri::XML(req.body)
-        require 'pry'
-        binding.pry
-        AWS::S3.new.buckets.to_a
+        uri = URI("http://#{AWS.config.s3_endpoint}:#{AWS.config.s3_port}")
+        doc = Nokogiri::XML(Net::HTTP.get(uri))
+
+        buckets = doc.search('Contents').select do |item|
+          item.search('Key').first.content !~ /\//
+        end.map do |xml_element|
+          bucket_name = xml_element.search('Key').first.content
+          {
+            :name          => bucket_name,
+            :last_modified => xml_element.search('LastModified').first.content
+          }
+        end
       end
 
       def title

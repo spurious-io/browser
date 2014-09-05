@@ -58,9 +58,6 @@ class App < Sinatra::Base
     redirect to('/sqs')
   end
 
-
-
-
   get '/s3' do
     mustache :s3
   end
@@ -72,6 +69,16 @@ class App < Sinatra::Base
   post '/s3/create' do
     AWS::S3.new.buckets.create(params['bucketName'])
     redirect to('/s3')
+  end
+
+  get '/s3/:bucket_name/clear' do
+    AWS::S3.new.buckets[params['bucket_name']].clear!
+    redirect to('/s3')
+  end
+
+  get '/s3/*' do
+    params['object_path'] = params[:captures][0]
+    mustache :s3_object
   end
 
   get '/dynamodb' do
