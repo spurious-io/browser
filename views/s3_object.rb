@@ -23,17 +23,22 @@ class App
       end
 
       def objects
-        bucket = AWS::S3.new.buckets[@params['object_path']]
         require 'pry'
+        bucket = AWS::S3.new.buckets[@params['object_path']].as_tree
         binding.pry
-        bucket.objects
-        # bucket.objects.map do |object|
-        #   {
-        #     :object_key      => object.key,
-        #     :object_modified => object.last_modified,
-        #     :content_type    => object.content_type,
-        #   }
-        # end
+        bucket.children.to_a.map do |object|
+          binding.pry
+          item = object.object
+          is_dir = item.key =~ /\//
+          item_key = is_dir ? item.key[/(.*)\//, 1] : item.key
+          {
+            :object_key      => item_key,
+            :content_type    => item.content_type,
+            :content_length  => item.content_length,
+            :object_path     => "#{s3_path}/#{item_key}",
+            :is_dir          => is_dir
+          }
+         end
       end
 
       def title

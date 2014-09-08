@@ -12,7 +12,6 @@
   <table class="table">
     <thead>
       <th>Name</th>
-      <th width="70%">Modfied</th>
       <th>Content type</th>
       <th>Size</th>
       <th colspan="2"></th>
@@ -20,15 +19,14 @@
     <tbody>
       {{# objects}}
 	  	<tr>
-			<td><a href="/s3/{{ name }}">{{ name }}</a></td>
-			<td>{{ last_modified }}</td>
-      <td>{{ content_length }}</td>
+			<td><a href="/s3/{{ object_path }}">{{ object_key }}</a></td>
       <td>{{ content_type }}</td>
+      <td>{{ content_length }}</td>
 			<td>
-				<a href="/s3/{{ name }}/clear" title="Clear messages"><span class="glyphicon glyphicon-trash"></span></a>
+				<a href="/s3/{{ object_path }}/clear" title="Clear messages"><span class="glyphicon glyphicon-trash"></span></a>
 			</td>
 			<td>
-				<a href="/s3/{{ name }}/delete" title="Delete"><span class="glyphicon glyphicon-remove-circle"></span></a>
+				<a href="/s3/{{ object_path }}/delete" title="Delete"><span class="glyphicon glyphicon-remove-circle"></span></a>
 			</td>
 		</tr>
       {{/objects}}
