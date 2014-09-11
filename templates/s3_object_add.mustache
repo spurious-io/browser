@@ -1,0 +1,32 @@
+<div class="panel panel-default">
+	<ol class="breadcrumb pull-left" style="margin-top:8px;margin-bottom:0px;">
+		<li><a href="/s3">S3</a></li>
+		{{# navigation}}
+			<li>
+				{{#last}}
+					{{ nav_name }}
+				{{/last}}
+				{{^last}}
+					<a href="{{ nav_path }}">{{ nav_name }}</a>
+				{{/last}}
+			</li>
+		{{/navigation}}
+	</ol>
+	<div class="panel-heading clearfix"></div>
+
+	<div class="panel-body">
+		<form role="form" action="/s3/add/{{ s3_path }}" method="post">
+			<div class="form-group">
+				<label for="key">Key</label>
+				<input type="text" class="form-control" id="key" name="key" placeholder="Enter key" required>
+				<label for="content">Content</label>
+				<textarea class="form-control" id="content" name="content" placeholder="Enter content" required></textarea>
+				<label for="contentType">Content Type</label>
+				<input type="text" class="form-control" id="contentType" name="contentType" placeholder="Enter content type (e.g text/plain)">
+			</div>
+			<button type="submit" class="btn btn-default">Save</button>
+		</form>
+	</div>
+
+</div>
+

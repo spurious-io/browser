@@ -2,7 +2,7 @@ require 'nokogiri'
 
 class App
   module Views
-    class S3Object < Layout
+    class S3ObjectAdd < Layout
       def content
         "S3 Browser"
       end
@@ -46,23 +46,11 @@ class App
               :is_dir         => false
             }
           end
-
-          # binding.pry
-          # item = object.object
-          # is_dir = item.key =~ /\//
-          # item_key = is_dir ? item.key[/(.*)\//, 1] : item.key
-          # {
-          #   :object_key      => item_key,
-          #   :content_type    => item.content_type,
-          #   :content_length  => item.content_length,
-          #   :object_path     => "#{s3_path}/#{item_key}",
-          #   :is_dir          => is_dir
-          # }
          end
       end
 
       def title
-        "#{super} | S3 | #{@params['object_path']}"
+        "#{super} | S3 | Add | #{@params['object_path']}"
       end
     end
   end

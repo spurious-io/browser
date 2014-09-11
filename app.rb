@@ -76,6 +76,25 @@ class App < Sinatra::Base
     redirect to('/s3')
   end
 
+  get '/s3/view/*' do
+    params['object_path'] = params[:captures][0]
+    mustache :s3_object_view
+  end
+
+  get '/s3/add/*' do
+    params['object_path'] = params[:captures][0]
+    mustache :s3_object_add
+  end
+
+  post '/s3/add/*' do
+    bucket = AWS::S3.new.buckets[params['bucket_name']]
+    params['object_path'] = params[:captures][0]
+    mustache :s3_object_add
+  end
+
+
+
+
   get '/s3/*' do
     params['object_path'] = params[:captures][0]
     mustache :s3_object

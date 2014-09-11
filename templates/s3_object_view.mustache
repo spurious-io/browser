@@ -1,0 +1,23 @@
+<div class="panel panel-default">
+  <ol class="breadcrumb pull-left" style="margin-top:8px;margin-bottom:0px;">
+    <li><a href="/s3">S3</a></li>
+    {{# navigation}}
+      <li>
+        {{#last}}
+          {{ nav_name }}
+        {{/last}}
+        {{^last}}
+          <a href="{{ nav_path }}">{{ nav_name }}</a>
+        {{/last}}
+      </li>
+    {{/navigation}}
+  </ol>
+  <div class="panel-heading clearfix">
+    <a class="btn btn-primary pull-right" href="/s3/{{ s3_path }}/create">Add</a>
+  </div>
+
+  {{ data }}
+
+
+</div>
+
