@@ -24,11 +24,38 @@ class App
         nav_parts
       end
 
-      def data
+      def metadata
         path_parts  = @params['object_path'].split('/')
         bucket_name = path_parts.shift
-        bucket = AWS::S3.new.buckets[bucket_name]
-        bucket.objects[path_parts.join('/')].read
+        object = AWS::S3.new.buckets[bucket_name].objects[path_parts.join('/')]
+        meta = [
+          {
+            :metadata_key    => 'Content type',
+            :metadata_value  => object.content_type,
+          },
+          {
+            :metadata_key => 'Length',
+            :metadata_value => object.content_length
+          },
+          {
+            :metadata_key => 'Etag',
+            :metadata_value => object.etag
+          },
+          {
+            :metadata_key => 'Last modified',
+            :metadata_value => object.last_modified
+          }
+        ]
+
+        object.metadata.to_h.each do |key, value|
+          meta << {
+            :metadata_key => key,
+            :metadata_value => value
+          }
+        end
+
+        meta
+
       end
 
       def title

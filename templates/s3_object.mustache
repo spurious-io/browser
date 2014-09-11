@@ -13,7 +13,6 @@
     {{/navigation}}
   </ol>
   <div class="panel-heading clearfix">
-    <a class="btn btn-primary pull-right" href="/s3/add/{{ s3_path }}">Add</a>
   </div>
 
   <table class="table">
@@ -22,29 +21,29 @@
       <th>Name</th>
       <th>Content type</th>
       <th>Size</th>
-      <th colspan="2" width="7%"></th>
+      <!-- <th colspan="2" width="7%"></th> -->
     </thead>
     <tbody>
       {{# objects}}
 	  	<tr>
-        <td>
-          {{#is_dir}}
-            <span class="glyphicon glyphicon-folder-close"></span>
-          {{/is_dir}}
-          {{^is_dir}}
-            <span class="glyphicon glyphicon-file"></span>
-          {{/is_dir}}
-        </td>
-        <td><a href="/s3/{{ object_path }}">{{ object_name }}</a></td>
-        <td>{{ content_type }}</td>
-        <td>{{ content_length }}</td>
-        <td>
-          <a href="/s3/{{ object_path }}/clear" title="Clear messages"><span class="glyphicon glyphicon-trash"></span></a>
-        </td>
-        <td>
-          <a href="/s3/{{ object_path }}/delete" title="Delete"><span class="glyphicon glyphicon-remove-circle"></span></a>
-        </td>
-		  </tr>
+			<td>
+			  {{#is_dir}}
+				<span class="glyphicon glyphicon-folder-close"></span>
+			  {{/is_dir}}
+			  {{^is_dir}}
+				<span class="glyphicon glyphicon-file"></span>
+			  {{/is_dir}}
+			</td>
+			<td><a href="/s3/{{ object_path }}">{{ object_name }}</a></td>
+			<td>{{ content_type }}</td>
+			<td>{{ content_length }}</td>
+			<!-- <td> -->
+			<!--   <a href="/s3/{{ object_path }}/clear" title="Clear messages"><span class="glyphicon glyphicon-trash"></span></a> -->
+			<!-- </td> -->
+			<!-- <td> -->
+			<!--   <a href="/s3/{{ object_path }}/delete" title="Delete"><span class="glyphicon glyphicon-remove-circle"></span></a> -->
+			<!-- </td> -->
+		</tr>
       {{/objects}}
     </tbody>
   </table>

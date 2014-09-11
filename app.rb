@@ -76,9 +76,21 @@ class App < Sinatra::Base
     redirect to('/s3')
   end
 
+  get '/s3/:bucket_name/delete' do
+    AWS::S3.new.buckets[params['bucket_name']].delete!
+  end
+
   get '/s3/view/*' do
     params['object_path'] = params[:captures][0]
     mustache :s3_object_view
+  end
+
+  get '/s3/preview/*' do
+    params['object_path'] = params[:captures][0]
+    path_parts  = params['object_path'].split('/')
+    object = AWS::S3.new.buckets[path_parts.shift].objects[path_parts.join('/')]
+    content_type object.content_type.empty? ? 'text/plain' : object.content_type
+    object.read
   end
 
   get '/s3/add/*' do
@@ -87,13 +99,9 @@ class App < Sinatra::Base
   end
 
   post '/s3/add/*' do
-    bucket = AWS::S3.new.buckets[params['bucket_name']]
     params['object_path'] = params[:captures][0]
-    mustache :s3_object_add
+    bucket = AWS::S3.new.buckets[params['bucket_name']]
   end
-
-
-
 
   get '/s3/*' do
     params['object_path'] = params[:captures][0]

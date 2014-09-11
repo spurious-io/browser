@@ -13,11 +13,30 @@
     {{/navigation}}
   </ol>
   <div class="panel-heading clearfix">
-    <a class="btn btn-primary pull-right" href="/s3/{{ s3_path }}/create">Add</a>
+    <a class="btn btn-primary pull-right" href="/s3/preview/{{ s3_path }}" target="_blank">View in browser</a>
+  </div>
+  <div class="panel-body">
+    <p>isdsd</p>  
   </div>
 
-  {{ data }}
-
+  <table class="table">
+    <thead>
+      <th>Key</th>
+      <th>Value</th>
+    </thead>
+    <tbody>
+      {{# metadata}}
+	  	<tr>
+        <td>
+          {{ metadata_key }}
+        </td>
+        <td>
+          {{ metadata_value }}
+        </td>
+		  </tr>
+      {{/metadata}}
+    </tbody>
+  </table>
 
 </div>
 
