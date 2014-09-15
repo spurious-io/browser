@@ -1,0 +1,26 @@
+<div class="panel panel-default">
+  <ol class="breadcrumb pull-left" style="margin-top:8px;margin-bottom:0px;">
+    <li><a href="/dynamodb">DynamoDB</a></li>
+    <li>Create</li>
+  </ol>
+  <div class="panel-heading clearfix"></div>
+
+  <div class="panel-body">
+    <table class="table">
+      <thead>
+        {{#items.headers}}
+          <th>{{ . }}</th>
+        {{/items.headers}}
+      </thead>
+      <tbody>
+      {{#items.data}}
+        <tr>
+          {{#.}}
+          <td>{{.}}</td>
+          {{/.}}
+        </tr>
+      {{/items.data}}
+      </tbody>
+    </table>
+  </div>
+</div>

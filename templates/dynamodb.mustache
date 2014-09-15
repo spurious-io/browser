@@ -1,1 +1,29 @@
-<h2>{{ content }}</h2>
+<div class="panel panel-default">
+  <ol class="breadcrumb pull-left" style="margin-top:8px;margin-bottom:0px;">
+    <li>DynamoDB</li>
+  </ol>
+  <div class="panel-heading clearfix">
+    <a class="btn btn-primary pull-right" href="/dynamodb/create">Create</a>
+  </div>
+
+  <table class="table">
+    <thead>
+      <th>Name</th>
+      <th>Status</th>
+      <th>Created</th>
+      <th>Items</th>
+      <th colspan="2"></th>
+    </thead>
+    <tbody>
+      {{# tables}}
+	  	<tr>
+			  <td><a href="/dynamodb/{{ table_name }}/view">{{ table_name }}</a></td>
+        <td>{{ table_status }}</td>
+        <td>{{ creation_date_time }}</td>
+        <td>{{ item_count }}</td>
+		  </tr>
+      {{/tables}}
+    </tbody>
+  </table>
+
+</div>

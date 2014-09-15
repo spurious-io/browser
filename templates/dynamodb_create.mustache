@@ -1,0 +1,22 @@
+<div class="panel panel-default">
+  <ol class="breadcrumb pull-left" style="margin-top:8px;margin-bottom:0px;">
+    <li><a href="/dynamodb">DynamoDB</a></li>
+    <li>Create</li>
+  </ol>
+  <div class="panel-heading clearfix"></div>
+
+  <div class="panel-body">
+	  <form role="form" action="/dynamodb/create" method="post">
+		<div class="form-group">
+		  <label for="tableName">Name</label>
+		  <input type="text" class="form-control" id="tableName" name="tableName" placeholder="Enter name" required>
+		</div>
+		<div class="form-group">
+		  <label for="tableData">Table data (json)</label>
+		  <textarea class="form-control" id="tableData" name="tableData" placeholder="Enter data" required rows=10></textarea>
+		</div>
+
+		<button type="submit" class="btn btn-default">Submit</button>
+	  </form>
+  </div>
+</div>

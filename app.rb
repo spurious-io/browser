@@ -112,6 +112,32 @@ class App < Sinatra::Base
     mustache :dynamodb
   end
 
+  get '/dynamodb/create' do
+    mustache :dynamodb_create
+  end
+
+  post '/dynamodb/create' do
+    begin
+      table_data = JSON::parse(params['tableData'], { :symbolize_names => true })
+      client = AWS::DynamoDB::Client::V20120810.new
+
+      if table_data[:table_name].nil?
+        table_data[:table_name] = params['tableName']
+      end
+
+      client.create_table(table_data)
+
+    rescue Exception => e
+      redirect to("/dynamodb?error=#{e.message}")
+    end
+
+    redirect to('/dynamodb')
+  end
+
+  get '/dynamodb/:table_name/view' do
+    mustache :dynamodb_view
+  end
+
   # get '/login/form' do
   #   mustache :login_form
   # end

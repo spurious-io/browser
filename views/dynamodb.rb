@@ -8,6 +8,13 @@ class App
       def title
         "#{super} - DynamoDB"
       end
+
+      def tables
+        ddb = AWS::DynamoDB::Client::V20120810.new
+        ddb.list_tables.table_names.map do |table_name|
+          ddb.describe_table({ :table_name => table_name })[:table]
+        end
+      end
     end
   end
 end
