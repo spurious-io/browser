@@ -31,26 +31,29 @@ puts options.inspect
 
         items = AWS::DynamoDB::Client::V20120810.new.scan(options)
 
-        headers = []
+        if items[:count] != 0
 
-        items[:member].first.each { |key, data| headers << key }
+          headers = []
 
-        item_arr = items[:member].reduce([]) do |accum, current|
-          new_accum = current.reduce([]) do |accum_in, (key, value)|
+          items[:member].first.each { |key, data| headers << key }
 
-            accum_in << "<td>#{value.values.first}</td>"
+          item_arr = items[:member].reduce([]) do |accum, current|
+            new_accum = current.reduce([]) do |accum_in, (key, value)|
+
+              accum_in << "<td>#{value.values.first}</td>"
+            end
+            accum << new_accum.join("\n")
+            accum
           end
-          accum << new_accum.join("\n")
-          accum
-        end
-        items[:member].first.delete("location")
+          items[:member].first.delete("location")
 
-        {
-          :headers    => headers,
-          :data       => item_arr,
-          :start_key  => items.fetch(:last_evaluated_key, nil),
-          :first_item => items[:member].last
-        }
+          {
+            :headers    => headers,
+            :data       => item_arr,
+            :start_key  => items.fetch(:last_evaluated_key, nil),
+            :first_item => items[:member].last
+          }
+        end
       end
 
       def pagination

@@ -5,33 +5,42 @@
   </ol>
   <div class="panel-heading clearfix"></div>
 
-  <div class="panel-body">
-    <div class="table-responsive">
-      <table class="table">
-        <thead>
-          {{#items.headers}}
-            <th>{{ . }}</th>
-          {{/items.headers}}
-        </thead>
-        <tbody>
-        {{#items.data}}
-          <tr>
-            {{#.}}
-              {{{ . }}}
-            {{/.}}
-          </tr>
-        {{/items.data}}
-        </tbody>
-      </table>
-     </div>
-  </div>
-</div>
-  <ul class="pager">
-    <li class="previous">
-      <a href="/dynamodb/{{ table_name }}/view{{ pagination.previous }}">Previous</a>
-    </li>
-    <li class="next">
-      <a href="/dynamodb/{{ table_name }}/view{{ pagination.next }}">Next</a>
-    </li>
-  </ul>
+  {{#items.data}}
 
+    <div class="panel-body">
+      <div class="table-responsive">
+        <table class="table">
+          <thead>
+            {{#items.headers}}
+              <th>{{ . }}</th>
+            {{/items.headers}}
+          </thead>
+          <tbody>
+          {{#items.data}}
+            <tr>
+              {{#.}}
+                {{{ . }}}
+              {{/.}}
+            </tr>
+          {{/items.data}}
+          </tbody>
+        </table>
+       </div>
+    </div>
+
+    <ul class="pager">
+      <li class="previous">
+        <a href="/dynamodb/{{ table_name }}/view{{ pagination.previous }}">Previous</a>
+      </li>
+      <li class="next">
+        <a href="/dynamodb/{{ table_name }}/view{{ pagination.next }}">Next</a>
+      </li>
+    </ul>
+
+  {{/items.data}}
+  {{^items.data}}
+    <div class="panel-body">
+      <p>No records available</p>
+    </div>
+  {{/items.data}}
+</div>
