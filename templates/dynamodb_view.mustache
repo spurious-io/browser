@@ -5,9 +5,23 @@
   </ol>
   <div class="panel-heading clearfix"></div>
 
-  {{#items.data}}
+  {{#has_records}}
 
     <div class="panel-body">
+      <nav>
+        <ul class="pager">
+          {{^items.first}}
+            <li class="previous">
+              <a href="/dynamodb/{{ table_name }}/view{{ pagination.previous }}">Previous</a>
+            </li>
+          {{/items.first}}
+          {{^items.last}}
+            <li class="next">
+              <a href="/dynamodb/{{ table_name }}/view{{ pagination.next }}">Next</a>
+            </li>
+          {{/items.last}}
+        </ul>
+      </nav>
       <div class="table-responsive">
         <table class="table">
           <thead>
@@ -26,21 +40,15 @@
           </tbody>
         </table>
        </div>
+
+ 
+
     </div>
 
-    <ul class="pager">
-      <li class="previous">
-        <a href="/dynamodb/{{ table_name }}/view{{ pagination.previous }}">Previous</a>
-      </li>
-      <li class="next">
-        <a href="/dynamodb/{{ table_name }}/view{{ pagination.next }}">Next</a>
-      </li>
-    </ul>
-
-  {{/items.data}}
-  {{^items.data}}
+  {{/has_records}}
+  {{^has_records}}
     <div class="panel-body">
       <p>No records available</p>
     </div>
-  {{/items.data}}
+  {{/has_records}}
 </div>
