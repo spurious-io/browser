@@ -134,6 +134,12 @@ class App < Sinatra::Base
     redirect to('/dynamodb')
   end
 
+  get '/dynamodb/:table_name/delete' do
+    client = AWS::DynamoDB::Client::V20120810.new
+    client.delete_table({:table_name => params['table_name'] })
+    redirect to('/dynamodb')
+  end
+
   get '/dynamodb/:table_name/view' do
     mustache :dynamodb_view
   end

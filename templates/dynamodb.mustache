@@ -12,7 +12,7 @@
       <th>Status</th>
       <th>Created</th>
       <th>Items</th>
-      <th colspan="2"></th>
+      <th></th>
     </thead>
     <tbody>
       {{# tables}}
@@ -21,6 +21,9 @@
         <td>{{ table_status }}</td>
         <td>{{ creation_date_time }}</td>
         <td>{{ item_count }}</td>
+        <td>
+          <a href="/dynamodb/{{ table_name }}/delete" title="Delete"><span class="glyphicon glyphicon-remove-circle"></span></a>
+        </td>
 		  </tr>
       {{/tables}}
     </tbody>
