@@ -6,26 +6,31 @@
     <a class="btn btn-primary pull-right" href="/dynamodb/create">Create</a>
   </div>
 
-  <table class="table">
-    <thead>
-      <th>Name</th>
-      <th>Status</th>
-      <th>Created</th>
-      <th>Items</th>
-      <th></th>
-    </thead>
-    <tbody>
-      {{# tables}}
-	  	<tr>
-			  <td><a href="/dynamodb/{{ table_name }}/view">{{ table_name }}</a></td>
-        <td>{{ table_status }}</td>
-        <td>{{ creation_date_time }}</td>
-        <td>{{ item_count }}</td>
-        <td>
-          <a href="/dynamodb/{{ table_name }}/delete" title="Delete"><span class="glyphicon glyphicon-remove-circle"></span></a>
-        </td>
-		  </tr>
-      {{/tables}}
-    </tbody>
-  </table>
+  {{#tables_available?}}
+    <table class="table">
+      <thead>
+        <th>Name</th>
+        <th>Status</th>
+        <th>Created</th>
+        <th>Items</th>
+        <th></th>
+      </thead>
+      <tbody>
+        {{# tables}}
+        <tr>
+          <td><a href="/dynamodb/{{ table_name }}/view">{{ table_name }}</a></td>
+          <td>{{ table_status }}</td>
+          <td>{{ creation_date_time }}</td>
+          <td>{{ item_count }}</td>
+          <td>
+            <a href="/dynamodb/{{ table_name }}/delete" title="Delete"><span class="glyphicon glyphicon-remove-circle"></span></a>
+          </td>
+        </tr>
+        {{/tables}}
+      </tbody>
+    </table>
+  {{/tables_available?}}
+  {{^tables_available?}}
+    <div class="panel-body">No tables available</div>
+  {{/tables_available?}}
 </div>

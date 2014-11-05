@@ -4,12 +4,7 @@
     <li>{{ content }}</li>
   </ol>
 
-  <div class="panel-heading clearfix">
-    <div class="btn-group pull-right">
-      <a class="btn btn-warning" href="/sqs/{{ content }}/clear" role="button">Clear <span class="glyphicon glyphicon-trash"></span></a>
-      <a class="btn btn-danger" href="/sqs/{{ content }}/delete" role="button">Delete <span class="glyphicon glyphicon-remove-circle"></span></a>
-    </div>
-  </div>
+  <div class="panel-heading clearfix"></div>
   <div class="panel-body">
   <form role="form" action="/sqs/{{ content }}" method="post">
     <div class="form-group">

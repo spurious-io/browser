@@ -6,29 +6,35 @@
     <a class="btn btn-primary pull-right" href="/sqs/create">Create</a>
   </div>
 
-  <table class="table">
-    <thead>
-      <th>Name</th>
-      <th>Url</th>
-      <th>Available</th>
-      <th>Visible</th>
-      <th colspan="2"></th>
-    </thead>
-    <tbody>
-      {{# queues}}
-        <tr>
-          <td><a href="/sqs/{{ name }}" title="{{ queue.arn}}">{{ name }}</a></td>
-          <td>{{ queue.url }}</td>
-          <td>{{ queue.approximate_number_of_messages }}</td>
-          <td>{{ queue.approximate_number_of_messages_not_visible }}</td>
-          <td>
-            <a href="/sqs/{{ name }}/clear" title="Clear messages"><span class="glyphicon glyphicon-trash"></span></a>
-          </td>
-          <td>
-            <a href="/sqs/{{ name }}/delete" title="Delete"><span class="glyphicon glyphicon-remove-circle"></span></a>
-          </td>
-        </tr>
-      {{/ queues}}
-    </tbody>
-  </table>
+  {{#queues_available?}}
+
+    <table class="table">
+      <thead>
+        <th>Name</th>
+        <th>Url</th>
+        <th>Available</th>
+        <th>Visible</th>
+        <th colspan="2"></th>
+      </thead>
+      <tbody>
+        {{# queues}}
+          <tr>
+            <td><a href="/sqs/{{ name }}" title="{{ queue.arn}}">{{ name }}</a></td>
+            <td>{{ queue.url }}</td>
+            <td>{{ queue.approximate_number_of_messages }}</td>
+            <td>{{ queue.approximate_number_of_messages_not_visible }}</td>
+            <td>
+              <a href="/sqs/{{ name }}/clear" title="Clear messages"><span class="glyphicon glyphicon-trash"></span></a>
+            </td>
+            <td>
+              <a href="/sqs/{{ name }}/delete" title="Delete"><span class="glyphicon glyphicon-remove-circle"></span></a>
+            </td>
+          </tr>
+        {{/ queues}}
+      </tbody>
+    </table>
+  {{/queues_available?}}
+  {{^queues_available?}}
+    <div class="panel-body">No queues available</div>
+  {{/queues_available?}}
 </div>

@@ -9,9 +9,13 @@ class App
         "#{super} - DynamoDB"
       end
 
+      def tables_available?
+        tables.length > 0
+      end
+
       def tables
         ddb = AWS::DynamoDB::Client::V20120810.new
-        ddb.list_tables.table_names.map do |table_name|
+        @tables ||= ddb.list_tables.table_names.map do |table_name|
           ddb.describe_table({ :table_name => table_name })[:table]
         end
       end
