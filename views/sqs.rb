@@ -8,8 +8,12 @@ class App
         "Queues"
       end
 
+      def queues_available?
+        queues.length > 0
+      end
+
       def queues
-        AWS::SQS.new.queues.to_a.map do |queue|
+        @queues ||= AWS::SQS.new.queues.to_a.map do |queue|
           OpenStruct.new({
             :queue => queue,
             :name  => queue.url[/([^\/]+)$/,1]

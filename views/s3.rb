@@ -7,8 +7,12 @@ class App
         "S3 Browser"
       end
 
+      def buckets_available?
+        buckets.length > 0
+      end
+
       def buckets
-        client.buckets.to_a.map do |bucket|
+        @buckets ||= client.buckets.to_a.map do |bucket|
           {
             :name          => bucket.name,
             :url           => bucket.url
