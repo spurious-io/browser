@@ -3,16 +3,21 @@ require "aws-sdk"
 module Spurious
   module Browser
     module Models
-      class Dynamodb
+      class S3
 
         def self.client
-          @@client ||= AWS::DynamoDB::Client::V20120810.new
+          @@client ||= AWS::S3.new
         end
 
-        def self.tables
-          @@tables ||= client.list_tables.table_names.map do |table_name|
-            client.describe_table({ :table_name => table_name })[:table]
+        def self.buckets
+          @@buckets ||= client.buckets.to_a.map do |bucket|
+            {
+              :name          => bucket.name,
+              :url           => bucket.url
+            }
           end
+        rescue AWS::S3::Errors::NoSuchBucket
+          {}
         end
 
         def self.create(table_data)
@@ -21,7 +26,7 @@ module Spurious
         end
 
         def self.delete(table_name)
-          client.delete_table({:table_name => table_name })
+          client.delete_table {:table_name => table_name }
         end
 
       end
