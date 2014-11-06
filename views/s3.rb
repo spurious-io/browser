@@ -1,37 +1,27 @@
-require 'nokogiri'
+require_relative "../models/s3"
 
-class App
-  module Views
-    class S3 < Layout
-      def content
-        "S3 Browser"
-      end
+module Spurious
+  module Browser
+    module Views
+      class S3 < Layout
 
-      def buckets_available?
-        buckets.length > 0
-      end
-
-      def buckets
-        @buckets ||= client.buckets.to_a.map do |bucket|
-          {
-            :name          => bucket.name,
-            :url           => bucket.url
-          }
+        def title
+          "#{super} | S3"
         end
-      rescue AWS::S3::Errors::NoSuchBucket
-        {}
+
+        def content
+          "S3 Browser"
+        end
+
+        def buckets_available?
+          Models::S3.buckets.length > 0
+        end
+
+        def buckets
+          Models::S3.buckets
+        end
+
       end
-
-      def title
-        "#{super} | S3"
-      end
-
-      protected
-
-      def client
-        @client ||= AWS::S3.new
-      end
-
     end
   end
 end

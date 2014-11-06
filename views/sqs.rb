@@ -1,28 +1,25 @@
-require 'spurious/ruby/awssdk/helper'
-require 'aws-sdk'
+require "aws-sdk"
+require_relative "../models/sqs"
 
-class App
-  module Views
-    class Sqs < Layout
-      def content
-        "Queues"
-      end
-
-      def queues_available?
-        queues.length > 0
-      end
-
-      def queues
-        @queues ||= AWS::SQS.new.queues.to_a.map do |queue|
-          OpenStruct.new({
-            :queue => queue,
-            :name  => queue.url[/([^\/]+)$/,1]
-          })
+module Spurious
+  module Browser
+    module Views
+      class Sqs < Layout
+        def content
+          "Queues"
         end
-      end
 
-      def title
-        "#{super} | SQS"
+        def title
+          "#{super} | SQS"
+        end
+
+        def queues_available?
+          queues.length > 0
+        end
+
+        def queues
+          Models::SQS.queues
+        end
       end
     end
   end
