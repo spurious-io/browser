@@ -1,13 +1,15 @@
 require 'aws-sdk'
 
-class App
-  module Views
-    class DynamodbCreate < Layout
+module Spurious
+  module Browser
+    module Views
+      class DynamodbCreate < Layout
 
-      def title
-        "#{super} | DynamoDB - Create"
+        def title
+          "#{super} | DynamoDB - Create"
+        end
+
       end
-
     end
   end
 end

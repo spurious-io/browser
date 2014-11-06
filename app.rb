@@ -1,67 +1,20 @@
 require 'sinatra/base'
 require 'mustache/sinatra'
-require 'routes/dynamodb'
-require 'routes/s3'
 require 'views/layout'
 
 module Spurious
   module Browser
     class App < Sinatra::Base
       register Mustache::Sinatra
-      register Sinatra::Namespace
 
       set :mustache, {
-        :views     => 'views',
-        :templates => 'templates',
+        :views     => File.join(File.dirname(__FILE__), 'views'),
+        :templates => File.join(File.dirname(__FILE__), 'templates'),
         :namespace => Spurious::Browser
       }
 
       get '/' do
         mustache :index
-      end
-
-      get '/sqs' do
-        mustache :sqs
-      end
-
-      get '/sqs/create' do
-        mustache :sqs_create
-      end
-
-      post '/sqs/create' do
-        AWS::SQS.new.queues.create params[:queueName]
-        redirect to('/sqs')
-      end
-
-      get '/sqs/:name' do
-        mustache :sqs_view
-      end
-
-      post '/sqs/:name' do
-        queue = AWS::SQS.new.queues.named(params['name'])
-        queue.send_message(params['sqsMessage'])
-        redirect to('/sqs')
-      end
-
-      get '/sqs/:name/delete' do
-        queue = AWS::SQS.new.queues.named(params['name'])
-        while queue.approximate_number_of_messages > 0
-          queue.receive_message(limit: 10) do |msg|
-            queue.batch_delete(msg)
-          end
-        end
-        queue.delete
-        redirect to('/sqs')
-      end
-
-      get '/sqs/:name/clear' do
-        queue = AWS::SQS.new.queues.named(params['name'])
-        while queue.approximate_number_of_messages > 0
-          queue.receive_message(limit: 10) do |msg|
-            queue.batch_delete(msg)
-          end
-        end
-        redirect to('/sqs')
       end
 
       # get '/login/form' do
