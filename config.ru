@@ -12,4 +12,6 @@ AWS.config({
 Spurious::Ruby::Awssdk::Helper.configure
 
 require 'app'
-run App.new
+
+map('/dynamodb') { run Spurious::Browser::Routes::Dynamodb }
+map('/s3') { run Spurious::Browser::Routes::S3 }
