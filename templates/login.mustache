@@ -1,0 +1,27 @@
+<div class="panel panel-default">
+  <ol class="breadcrumb pull-left" style="margin-top:8px;margin-bottom:0px;">
+    <li>Login</li>
+  </ol>
+  <div class="panel-heading clearfix"></div>
+
+  <div class="panel-body">
+    <p>You need to login with the credentials you use to connect to the various spurious services below.</p>
+
+
+	  <form role="form" action="/login" method="post">
+      <div class="form-group">
+        <label for="accessKeyId">Access key id</label>
+        <input type="text" class="form-control" id="accessKeyId" name="accessKeyId" placeholder="Enter Access Key Id" required>
+      </div>
+      <div class="form-group">
+        <label for="secretAccessKey">Secret access key</label>
+        <input type="text" class="form-control" id="secretAccessKey" name="secretAccessKey" placeholder="Enter Secret Access Key" required>
+      </div>
+      <div class="form-group">
+        <label for="region">Region</label>
+        <input type="text" class="form-control" id="region" name="region" placeholder="Enter Region" required>
+      </div>
+		<button type="submit" class="btn btn-default">Submit</button>
+	  </form>
+  </div>
+</div>
