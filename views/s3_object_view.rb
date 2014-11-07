@@ -33,7 +33,7 @@ module Spurious
           path_parts  = @params['object_path'].split('/')
           bucket_name = path_parts.shift
 
-          Models::S3.object(bucket_name, path_parts.join('/'))
+          Models::S3.object_meta Models::S3.object(bucket_name, path_parts.join('/'))
         end
 
       end

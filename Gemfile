@@ -1,4 +1,14 @@
 source 'https://rubygems.org'
 
-# Specify your gem's dependencies in spurious-browser.gemspec
-gemspec
+gem "spurious"
+gem "spurious-ruby-awssdk-helper"
+gem "sinatra"
+gem "mustache"
+gem "aws-sdk"
+
+group :development do
+  gem "bundler", "~> 1.5"
+  gem "rake"
+  gem "rerun"
+  gem "pry"
+end

@@ -10,7 +10,7 @@ module Spurious
         end
 
         def self.buckets
-          @@buckets ||= client.buckets.to_a.map do |bucket|
+          client.buckets.to_a.map do |bucket|
             {
               :name          => bucket.name,
               :url           => bucket.url
@@ -47,8 +47,11 @@ module Spurious
           end
         end
 
-        def self.object(bucket, path)
-          object = client.buckets[bucket].objects[path]
+        def self.object(bucket_name, object_path)
+          client.buckets[bucket_name].objects[object_path]
+        end
+
+        def self.object_meta(object)
           meta = [
             {
               :metadata_key   => 'Content type',
@@ -76,16 +79,10 @@ module Spurious
               }
             end
           end
-
         end
 
-        def self.create(table_data)
-          table_data[:table_name] = params['tableName'] if table_data[:table_name].nil?
-          client.create_table table_data
-        end
-
-        def self.delete(table_name)
-          client.delete_table({:table_name => table_name })
+        def self.create(bucket_name)
+          client.buckets.create bucket_name
         end
 
       end
