@@ -1,5 +1,6 @@
-require 'aws-sdk'
+require "aws-sdk"
 require "base64"
+require_relative "../models/dynamodb"
 
 module Spurious
   module Browser
@@ -8,16 +9,6 @@ module Spurious
         attr_reader :client
 
         LIMIT = 10
-
-        def client
-          @client ||= AWS::DynamoDB::Client::V20120810.new
-        end
-
-        def item_count
-          @item_count ||= client.describe_table({
-            :table_name => table_name
-          })[:table][:item_count]
-        end
 
         def title
           "#{super} | DynamoDB - View"
@@ -28,36 +19,16 @@ module Spurious
         end
 
         def has_records
-          item_count > 0
+          Models::Dynamodb.table_length(table_name) > 0
+        end
+
+        def start_key
+          (pagination_data.nil? || pagination_data['next'].nil?) ? nil : pagination_data['next']
         end
 
         def items
-          options = {
-            :table_name => table_name,
-            :limit      => LIMIT
-          }
-
-          options[:exclusive_start_key] = pagination_data['next'] unless pagination_data.nil? || pagination_data['next'].nil?
-          items = client.scan(options)
-
-          if items[:count] != 0
-            headers = items[:member].first.reduce([]) { |accum, (key, data)| accum << key }
-
-            item_arr = items[:member].reduce([]) do |accum, current|
-              new_accum = current.reduce([]) do |accum_in, (key, value)|
-                accum_in << "<td>#{value.values.first}</td>"
-              end
-              accum.tap { |a| a << new_accum.join("\n") }
-            end
-            items[:member].first.delete("location")
-
-            @data ||= {
-              :first      => pagination_data.nil? || pagination_data['next'].nil?,
-              :last       => items[:last_evaluated_key].nil?,
-              :headers    => headers,
-              :data       => item_arr,
-              :start_key  => items.fetch(:last_evaluated_key, nil)
-            }
+          @items ||= Models::Dynamodb.query(table_name, LIMIT, start_key).tap do |items|
+            items[:first] = pagination_data.nil? || pagination_data['next'].nil?
           end
         end
 

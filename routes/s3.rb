@@ -1,11 +1,12 @@
-require_relative '../app'
+require_relative "../app"
+require_relative "../models/s3"
 
 module Spurious
   module Browser
     module Routes
       class S3 < Spurious::Browser::App
 
-        get '' do
+        get '/?' do
           mustache :s3
         end
 
@@ -14,17 +15,17 @@ module Spurious
         end
 
         post '/create' do
-          AWS::S3.new.buckets.create(params['bucketName'])
-          redirect to('/s3')
+          Models::S3.bucket params['bucketName']
+          redirect to('/')
         end
 
         get '/:bucket_name/clear' do
-          AWS::S3.new.buckets[params['bucket_name']].clear!
-          redirect to('/s3')
+          Models::S3.bucket(params['bucket_name']).clear!
+          redirect to('/')
         end
 
         get '/:bucket_name/delete' do
-          AWS::S3.new.buckets[params['bucket_name']].delete!
+          Models::S3.bucket(params['bucket_name']).delete!
         end
 
         get '/view/*' do
@@ -35,7 +36,7 @@ module Spurious
         get '/preview/*' do
           params['object_path'] = params[:captures][0]
           path_parts  = params['object_path'].split('/')
-          object = AWS::S3.new.buckets[path_parts.shift].objects[path_parts.join('/')]
+          object = Models::S3.object(path_parts.shift, path_parts.join('/'))
           content_type object.content_type.empty? ? 'text/plain' : object.content_type
           object.read
         end
@@ -47,7 +48,7 @@ module Spurious
 
         post '/add/*' do
           params['object_path'] = params[:captures][0]
-          bucket = AWS::S3.new.buckets[params['bucket_name']]
+          bucket = Models::S3.bucket params['bucket_name']
         end
 
         get '/*' do

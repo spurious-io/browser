@@ -1,4 +1,4 @@
-require 'nokogiri'
+require_relative "../models/s3"
 
 module Spurious
   module Browser
@@ -7,6 +7,10 @@ module Spurious
 
         def content
           "S3 Browser"
+        end
+
+        def title
+          "#{super} | S3 | View | #{@params['object_path']}"
         end
 
         def s3_path
@@ -28,40 +32,10 @@ module Spurious
         def metadata
           path_parts  = @params['object_path'].split('/')
           bucket_name = path_parts.shift
-          object = AWS::S3.new.buckets[bucket_name].objects[path_parts.join('/')]
-          meta = [
-            {
-              :metadata_key    => 'Content type',
-              :metadata_value  => object.content_type,
-            },
-            {
-              :metadata_key => 'Length',
-              :metadata_value => object.content_length
-            },
-            {
-              :metadata_key => 'Etag',
-              :metadata_value => object.etag
-            },
-            {
-              :metadata_key => 'Last modified',
-              :metadata_value => object.last_modified
-            }
-          ]
 
-          object.metadata.to_h.each do |key, value|
-            meta << {
-              :metadata_key => key,
-              :metadata_value => value
-            }
-          end
-
-          meta
-
+          Models::S3.object(bucket_name, path_parts.join('/'))
         end
 
-        def title
-          "#{super} | S3 | View | #{@params['object_path']}"
-        end
       end
     end
   end

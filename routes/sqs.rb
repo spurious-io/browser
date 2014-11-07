@@ -1,11 +1,12 @@
-require_relative '../app'
+require_relative "../app"
+require_relative "../models/sqs"
 
 module Spurious
   module Browser
     module Routes
       class SQS < Spurious::Browser::App
 
-        get '' do
+        get '/?' do
           mustache :sqs
         end
 
@@ -14,8 +15,8 @@ module Spurious
         end
 
         post '/create' do
-          AWS::SQS.new.queues.create params[:queueName]
-          redirect to('/sqs')
+          Models::SQS.create params[:queueName]
+          redirect to('/')
         end
 
         get '/:name' do
@@ -23,30 +24,19 @@ module Spurious
         end
 
         post '/:name' do
-          queue = AWS::SQS.new.queues.named(params['name'])
-          queue.send_message(params['sqsMessage'])
-          redirect to('/sqs')
+          Models::SQS.send_message(params['name'], params['sqsMessage'])
+          redirect to('/')
         end
 
         get '/:name/delete' do
-          queue = AWS::SQS.new.queues.named(params['name'])
-          while queue.approximate_number_of_messages > 0
-            queue.receive_message(limit: 10) do |msg|
-              queue.batch_delete(msg)
-            end
-          end
-          queue.delete
-          redirect to('/sqs')
+          Models::SQS.clear params['name']
+          Models::SQS.delete params['name']
+          redirect to('/')
         end
 
         get '/:name/clear' do
-          queue = AWS::SQS.new.queues.named(params['name'])
-          while queue.approximate_number_of_messages > 0
-            queue.receive_message(limit: 10) do |msg|
-              queue.batch_delete(msg)
-            end
-          end
-          redirect to('/sqs')
+          Models::SQS.clear params['name']
+          redirect to('/')
         end
 
       end

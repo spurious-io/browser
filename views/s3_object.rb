@@ -1,4 +1,4 @@
-require 'nokogiri'
+require_relative "../models/s3"
 
 module Spurious
   module Browser
@@ -25,41 +25,10 @@ module Spurious
         end
 
         def objects
-          require 'pry'
-          path_parts  = @params['object_path'].split('/')
-          bucket_name = path_parts.shift
-          prefix = path_parts.length > 0 ? path_parts.join('/') : nil
-          bucket = AWS::S3.new.buckets[bucket_name].as_tree(:prefix => prefix)
+          object_path  = @params['object_path'].split('/')
+          bucket_name = object_path.shift
 
-          bucket.children.to_a.map do |object|
-            if object.respond_to?(:prefix)
-              {
-                :object_name => object.prefix[/([^\/]*)$/],
-                :object_path => File.join(bucket_name, object.prefix),
-                :is_dir      => true
-              }
-            else
-              {
-                :object_name    => object.key[/([^\/]*)$/],
-                :object_path    => File.join('view', bucket_name, object.key),
-                :content_type   => object.member.content_type,
-                :content_length => object.member.content_length,
-                :is_dir         => false
-              }
-            end
-
-            # binding.pry
-            # item = object.object
-            # is_dir = item.key =~ /\//
-            # item_key = is_dir ? item.key[/(.*)\//, 1] : item.key
-            # {
-            #   :object_key      => item_key,
-            #   :content_type    => item.content_type,
-            #   :content_length  => item.content_length,
-            #   :object_path     => "#{s3_path}/#{item_key}",
-            #   :is_dir          => is_dir
-            # }
-           end
+          Models::S3.objects(bucket_name, object_path)
         end
 
         def title
