@@ -5,6 +5,10 @@ module Spurious
         def title
           "Spurious Browser"
         end
+
+        def logged_in?
+          @logged_in
+        end
       end
     end
   end

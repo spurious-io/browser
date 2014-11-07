@@ -37,6 +37,11 @@
 					<li><a href="/s3">S3</a></li>
 					<li><a href="/dynamodb">DynamoDB</a></li>
 				</ul>
+				<ul class="nav navbar-nav navbar-right">
+					{{#logged_in?}}
+						<li><a href="/logout" class="pull-right">Logout</a></li>
+					{{/logged_in?}}
+				</ul>
 			</div><!--/.nav-collapse -->
 			</nav>
 
