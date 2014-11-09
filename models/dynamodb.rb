@@ -10,7 +10,7 @@ module Spurious
         end
 
         def self.tables
-          @@tables ||= client.list_tables.table_names.map do |table_name|
+          client.list_tables.table_names.map do |table_name|
             client.describe_table({ :table_name => table_name })[:table]
           end
         end
@@ -25,7 +25,7 @@ module Spurious
         end
 
         def self.table_length(table_name)
-          @@table_length ||= client.describe_table({
+          client.describe_table({
             :table_name => table_name
           })[:table][:item_count]
         end

@@ -15,7 +15,7 @@ module Spurious
         end
 
         post '/create' do
-          Models::S3.bucket params['bucketName']
+          Models::S3.create params['bucketName']
           redirect to('/')
         end
 

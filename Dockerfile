@@ -3,4 +3,4 @@ MAINTAINER Steven Jack <stevenmajack@gmail.com>
 
 EXPOSE 9292
 
-ENTRYPOINT ["rackup"]
+#ENTRYPOINT ["rackup"]
