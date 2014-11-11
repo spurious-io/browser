@@ -51,7 +51,6 @@ module Spurious
             items[:member].first.delete("location")
 
             {
-              :first      => pagination_data.nil? || pagination_data['next'].nil?,
               :last       => items[:last_evaluated_key].nil?,
               :headers    => headers,
               :data       => item_arr,
