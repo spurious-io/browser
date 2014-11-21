@@ -27,7 +27,7 @@ module Spurious
         end
 
         def self.send_message(queue_name, message)
-          queue(queue_name).send_message(message)
+          queue(queue_name).send_message(message.gsub(/\r?\n/, ''))
         end
 
         def self.clear(queue_name)
