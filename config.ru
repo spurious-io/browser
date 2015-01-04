@@ -3,7 +3,9 @@ $LOAD_PATH.unshift(File.dirname(__FILE__))
 require 'aws-sdk'
 require 'spurious/ruby/awssdk/helper'
 
-Spurious::Ruby::Awssdk::Helper.configure(:docker)
+config_type = ENV['CONTAINER_BASED'].nil? ? :cli : :docker
+
+Spurious::Ruby::Awssdk::Helper.configure config_type
 
 require 'app'
 require 'routes/dynamodb'
