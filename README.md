@@ -1,7 +1,5 @@
 # Spurious::Browser
 
-[![Gem Version](https://badge.fury.io/rb/spurious-browser.png)](http://badge.fury.io/rb/spurious-browser)
-
 ![screenshot 2015-01-04 16 44 22](https://cloud.githubusercontent.com/assets/527874/5606671/a7a6e6e2-9431-11e4-825d-a0797cdb7e93.png)
 
 Part of the [spurious](https://www.github.com/stevenjack/spurious) family.
