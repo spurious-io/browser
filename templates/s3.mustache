@@ -10,14 +10,13 @@
     <table class="table">
       <thead>
         <th>Name</th>
-        <th width="70%">Url</th>
-        <!-- <th colspan="2" width="7%"></th> -->
+        <th width="70%">Objects</th>
       </thead>
       <tbody>
         {{# buckets}}
         <tr>
         <td><a href="/s3/{{ name }}">{{ name }}</a></td>
-        <td>{{ url }}</td>
+        <td>{{ objects }}</td>
         <!-- <td> -->
         <!-- 	<a href="/s3/{{ name }}/clear" title="Clear messages"><span class="glyphicon glyphicon-trash"></span></a> -->
         <!-- </td> -->

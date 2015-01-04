@@ -13,7 +13,7 @@ module Spurious
           client.buckets.to_a.map do |bucket|
             {
               :name          => bucket.name,
-              :url           => bucket.url
+              :objects       => bucket.objects.to_a.length
             }
           end
         rescue AWS::S3::Errors::NoSuchBucket
@@ -26,18 +26,21 @@ module Spurious
 
         def self.objects(bucket_name, object_path)
           prefix = object_path.length > 0 ? object_path.join('/') : nil
+          require 'pry'
           bucket = client.buckets[bucket_name].as_tree(:prefix => prefix)
 
           bucket.children.to_a.map do |object|
             if object.respond_to?(:prefix)
               {
-                :object_name => object.prefix[/([^\/]*)$/],
-                :object_path => File.join(bucket_name, object.prefix),
-                :is_dir      => true
+                :object_name    => object.prefix.split('/').last,
+                :object_path    => File.join(bucket_name, object.prefix),
+                :is_dir         => true,
+                :content_type   => '-',
+                :content_length => '-'
               }
             else
               {
-                :object_name    => object.key[/([^\/]*)$/],
+                :object_name    => object.key.split('/').last,
                 :object_path    => File.join('view', bucket_name, object.key),
                 :content_type   => object.member.content_type,
                 :content_length => object.member.content_length,
