@@ -12,7 +12,7 @@ think of it as a basic version of the AWS console.
 ## Installation
 
 Read the installation instructions for [spurious](https://www.github.com/stevenjack/spurious) as
-the browser is one of the services that started and run by spurious.
+the browser is one of the services that's started and run by spurious.
 
 ## Contributing
 
